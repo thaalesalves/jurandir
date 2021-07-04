@@ -1,0 +1,20 @@
+spring.application.name: Jurandir
+logging.file.name: logs/jurandir.log
+server:
+  port: ${PORT:8080}
+jurandir:
+  discord:
+    api:
+      token: NTYwMjA0Nzk5OTI1Mjg4OTYy.XJqRYA.JlutY_5joSut-SoPCLpYmw9YJ9A
+      id: 560204799925288962
+      secret: k62c9pibRwP0l6e62UQj9KGudQERkaU4
+    message:
+      operator: /j
+    guild:
+      id: 861048240278601748
+  gpt:
+    temperature: 1
+    p-value: 1
+    max-tokens: 100
+    min-tokens: 5
+    gpt-api: http://30e65a5128ea.ngrok.io
