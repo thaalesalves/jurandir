@@ -5,16 +5,16 @@ server:
 jurandir:
   discord:
     api:
-      token: NTYwMjA0Nzk5OTI1Mjg4OTYy.XJqRYA.JlutY_5joSut-SoPCLpYmw9YJ9A
-      id: 560204799925288962
-      secret: k62c9pibRwP0l6e62UQj9KGudQERkaU4
+      token: ${BOT_TOKEN}
+      id: ${BOT_ID}
+      secret: ${BOT_SECRET}
     message:
       operator: /j
     guild:
-      id: 861048240278601748
+      id: ${GUILD_ID}
   gpt:
     temperature: 1
     p-value: 1
     max-tokens: 100
     min-tokens: 5
-    gpt-api: http://30e65a5128ea.ngrok.io
+    gpt-api: "http://30e65a5128ea.ngrok.io"
