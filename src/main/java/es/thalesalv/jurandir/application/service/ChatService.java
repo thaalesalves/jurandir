@@ -19,7 +19,6 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageHistory;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.MessageHistory.MessageRetrieveAction;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -45,10 +44,10 @@ public class ChatService extends ListenerAdapter {
             User bot = guild.getMemberById(botId).getUser();
             MessageChannel channel = event.getChannel();
             User author = event.getAuthor();
-            String message = event.getMessage()
-                    .getContentDisplay()
+            Message originalMessage = event.getMessage();
+            String message = originalMessage.getContentDisplay()
                     .replace(event.getMessage().getMentionedUsers().get(event.getMessage().getMentionedUsers().indexOf(bot)).getAsMention(), "")
-                    .replace("@Grand Prognosticator", "").trim();
+                    .replace("@" + bot.getName(), "").trim();
 
             boolean isElegible = event.isFromType(ChannelType.TEXT) && (event.getMessage().getMentionedUsers().contains(bot));
             LOGGER.info(CHAT_LOGGER, guild.getName(), author.getName(), channel.getName(), event.getMessage().getContentRaw());
@@ -59,8 +58,8 @@ public class ChatService extends ListenerAdapter {
                         msgHist.getRetrievedHistory().forEach(msg -> {
                             try {
                                 sb.insert(0, msg.getAuthor().getName().trim()
-                                    + " said: "
-                                    + msg.getContentRaw().replaceAll("<@!*&*[0-9]+>", "").trim()
+                                    + " says: "
+                                    + msg.getContentRaw().replaceAll("<@!*&*[0-9]+>", "").replace(bot.getName(), "You").trim()
                                     +"\n");
                             } catch (Exception e) {
                                 LOGGER.error(e.getMessage());
@@ -68,21 +67,20 @@ public class ChatService extends ListenerAdapter {
                             }
                         });
 
-                        sb.insert(0, "Your name is Jurandir, and you're a Discord bot."
-                                + " You are a very nice bot and loves to talk to humans on Discord."
-                                + " Thaalesalves is your creator, and he loves you very much."
-                                + " When people talk to you, you will answer truthfully and in direct answers."
-                                + "\n\n");
+                        // sb.insert(0,"This is a conversation between Jurandir, an AI bot powered by GPT technologies, and a human person on Discord. "
+                        //     + "This should follow a specific chat format, where the human asks something and Jurandir replies. Here's an example of how this conversation works:\n"
+                        //     + "Marcus says: Hello, bot.\nJurandir says: Hello, human. How are you doing.\n"
+                        //     + "Marcus says: I'm doing fine, robot. Thanks for asking. What about you?\nJurandir says: I'm doing fine too!\n\n");
 
                         if (!author.isBot() && isElegible) {
-                            gpt.prompt(sb.toString(), message, author).map(gptResponse -> {
+                            gpt.prompt(bot, sb.toString(), message, author).map(gptResponse -> {
                                 try {
                                     String formattedResponse = "";
                                     JsonNode node = objectMapper.readValue(gptResponse, ObjectNode.class).get("data");
                                     if (node.has("seqs")) {
-                                        formattedResponse = node.get("seqs").path(0).asText().trim();
+                                        formattedResponse = node.get("seqs").path(0).asText().trim().split("\n")[0].trim().replaceAll("^\"|\"$", "");
                                     } else if (node.has("text")) {
-                                        formattedResponse = node.get("text").asText().trim();
+                                        formattedResponse = node.get("text").asText().trim().split("\n")[0].trim().replaceAll("^\"|\"$", "");
                                     } else {
                                         throw new RuntimeException("The JSON response is not in the correct format.");
                                     }
@@ -92,7 +90,7 @@ public class ChatService extends ListenerAdapter {
                                         formattedResponse = "Sorry, I don't know what to say.";
                                     }
         
-                                    channel.sendMessage(author.getAsMention() + " " + formattedResponse.trim()).complete();
+                                    channel.sendMessage(formattedResponse.trim()).mentionRepliedUser(true).complete();
                                     return formattedResponse;
                                 } catch (Exception e) {
                                     LOGGER.error(e.getMessage());

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import es.thalesalv.jurandir.adapter.model.KoboldAiRequestBody;
-import es.thalesalv.jurandir.application.datastore.ContextDatastore;
 import net.dv8tion.jda.api.entities.User;
 import reactor.core.publisher.Mono;
 
@@ -27,22 +26,15 @@ public class GPTService {
     @Value("${jurandir.gpt.max-tokens}")
     private int maxTokens;
 
-    @Value("${jurandir.gpt.gpt-api}")
-    private String gptApi;
-
     private final WebClient webClient;
-    private final ContextDatastore contextDatastore;
     private final ObjectMapper objectMapper;
 
-    public GPTService(WebClient.Builder webClientBuilder, ContextDatastore contextDatastore, ObjectMapper objectMapper) {
-        this.contextDatastore = contextDatastore;
+    public GPTService(@Value("${jurandir.gpt.gpt-api}") String gptApi, WebClient.Builder webClientBuilder, ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
-
-        contextDatastore.setBotUrl(gptApi);
-        this.webClient = webClientBuilder.baseUrl("http://0afe4c13cd08.ngrok.io").build();
+        this.webClient = webClientBuilder.baseUrl(gptApi).build();
     }
 
-    public Mono<String> prompt(String context, String message, User author) throws JsonProcessingException {
+    public Mono<String> prompt(User bot, String context, String message, User author) throws JsonProcessingException {
 
         return this.webClient.post()
             .uri(uri -> uri.pathSegment("request").build())
@@ -59,13 +51,12 @@ public class GPTService {
                     .numseqs(1)
                     .repPen(1)
                     .text(new StringBuilder()
-                        .append(context.replace("Grand Prognosticator", "You"))
-                        .append(author.getName().replace("Grand Prognosticator", "You") + " says: " + message)
-                        .append("\nYou reply: ")
+                        .append(context)
+                        .append(author.getName().replace(bot.getName(), "You") + " says: " + message.replace(bot.getAsTag(), "").trim())
+                        .append("\nJurandir replies: ")
                         .toString())
                     .build()))
             .retrieve()
-            .bodyToMono(String.class)
-            .map(reply -> reply.split("\n")[0]);
+            .bodyToMono(String.class);
     }
 }

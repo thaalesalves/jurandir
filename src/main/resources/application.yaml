@@ -1,7 +1,6 @@
 spring.application.name: Jurandir
 logging.file.name: logs/jurandir.log
-server:
-  port: ${PORT:8080}
+server.port: ${PORT:8080}
 jurandir:
   discord:
     api:
@@ -13,8 +12,8 @@ jurandir:
     guild:
       id: ${GUILD_ID}
   gpt:
-    temperature: 1
-    p-value: 1
+    temperature: 0.8
+    p-value: 0.8
     max-tokens: 100
     min-tokens: 5
-    gpt-api: "http://30e65a5128ea.ngrok.io"
+    gpt-api: ${AI_API}

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import es.thalesalv.jurandir.application.service.ChatService;
 import net.dv8tion.jda.api.JDA;
@@ -25,11 +26,11 @@ public class JurandirApplication {
     }
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(JurandirApplication.class, args);
+        ConfigurableApplicationContext ctx = SpringApplication.run(JurandirApplication.class, args);
         JDA jda = JDABuilder.createDefault(API_TOKEN)
             .addEventListeners(CHAT_SERVICE)
             .build();
 
-        jda.awaitReady();
+        // ctx.getBeanFactory().registerSingleton("JDA", jda);
     }
 }
