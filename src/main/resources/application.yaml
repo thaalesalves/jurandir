@@ -1,19 +1,18 @@
-spring.application.name: Jurandir
 logging.file.name: logs/jurandir.log
 server.port: ${PORT:8080}
+
+spring:
+  application.name: Jurandir
+  redis:
+    host: localhost
+    port: 6370
+
 jurandir:
   discord:
+    message.operator: /j
     api:
       token: ${BOT_TOKEN}
       id: ${BOT_ID}
       secret: ${BOT_SECRET}
-    message:
-      operator: /j
-    guild:
-      id: ${GUILD_ID}
   gpt:
-    temperature: 0.8
-    p-value: 0.8
-    max-tokens: 100
-    min-tokens: 5
-    gpt-api: ${AI_API}
+    server: ${KOBOLDAI_API}

@@ -1,4 +1,4 @@
-package es.thalesalv.jurandir.adapter.model;
+package es.thalesalv.jurandir.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

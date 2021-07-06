@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import es.thalesalv.jurandir.application.bean.JurandirConfigBean;
 import es.thalesalv.jurandir.application.service.ChatService;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -14,6 +15,12 @@ import net.dv8tion.jda.api.JDABuilder;
 public class JurandirApplication {
     private static String API_TOKEN;
     private static ChatService CHAT_SERVICE;
+    private static JurandirConfigBean JURANDIR_CONFIG_BEAN;
+
+    @Autowired
+    private void setJurandirConfigBean(JurandirConfigBean jurandirConfigBean) {
+        JURANDIR_CONFIG_BEAN = jurandirConfigBean;
+    }
 
     @Autowired
     private void setChatService(ChatService chatService) {
@@ -31,6 +38,7 @@ public class JurandirApplication {
             .addEventListeners(CHAT_SERVICE)
             .build();
 
+        JURANDIR_CONFIG_BEAN.updateConfig();
         ctx.getBeanFactory().registerSingleton("JDA", jda);
     }
 }
