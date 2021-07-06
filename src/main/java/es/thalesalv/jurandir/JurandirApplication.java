@@ -31,6 +31,6 @@ public class JurandirApplication {
             .addEventListeners(CHAT_SERVICE)
             .build();
 
-        // ctx.getBeanFactory().registerSingleton("JDA", jda);
+        ctx.getBeanFactory().registerSingleton("JDA", jda);
     }
 }

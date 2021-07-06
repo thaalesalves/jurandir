@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class ControllerResponse {
-    
+
+    private String message;
     private String response;
 }

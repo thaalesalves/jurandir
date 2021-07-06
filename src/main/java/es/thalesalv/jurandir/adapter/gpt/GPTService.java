@@ -3,6 +3,7 @@ package es.thalesalv.jurandir.adapter.gpt;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -52,7 +53,7 @@ public class GPTService {
                     .repPen(1)
                     .text(new StringBuilder()
                         .append(context)
-                        .append(author.getName().replace(bot.getName(), "You") + " says: " + message.replace(bot.getAsTag(), "").trim())
+                        .append(author.getName().replace(bot.getName(), "You") + " says: " + message.replace(bot.getAsTag(), StringUtils.EMPTY).trim())
                         .append("\nJurandir replies: ")
                         .toString())
                     .build()))
