@@ -1,11 +1,10 @@
-package es.thalesalv.jurandir.application.service;
+package es.thalesalv.jurandir.adapter.controller.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import es.thalesalv.jurandir.adapter.model.KoboldAiRequestBody;
@@ -13,7 +12,7 @@ import es.thalesalv.jurandir.application.data.ApplicationContextStore;
 import net.dv8tion.jda.api.entities.User;
 import reactor.core.publisher.Mono;
 
-@Service
+@Component
 public class GPTService {
 
     private final WebClient.Builder webClientBuilder;

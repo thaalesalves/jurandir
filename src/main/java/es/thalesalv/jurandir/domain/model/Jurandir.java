@@ -14,6 +14,12 @@ public class Jurandir {
     @JsonProperty("channel_lock")
     private boolean channelLock;
 
+    @JsonProperty("story_channel")
+    private String storyChannel;
+
+    @JsonProperty("locked_channel_id")
+    private String lockedChannelId;
+
     @JsonProperty("authorized_channels")
     private List<Long> authorizedChannels;
 

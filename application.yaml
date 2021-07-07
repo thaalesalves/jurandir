@@ -1,0 +1,22 @@
+logging.file.name: logs/jurandir.log
+server.port: ${PORT:8080}
+
+spring:
+  application.name: Jurandir
+  jpa:
+    hibernate.ddl-auto: create
+    generate-ddl: true
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+jurandir:
+  discord:
+    context-window: 10
+    message.operator: /j
+    api:
+      token: ${BOT_TOKEN}
+      id: ${BOT_ID}
+      secret: ${BOT_SECRET}

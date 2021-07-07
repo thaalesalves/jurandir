@@ -1,4 +1,4 @@
-package es.thalesalv.jurandir.application.usecase;
+package es.thalesalv.jurandir.application.bean;
 
 import java.awt.Color;
 import java.time.LocalDateTime;

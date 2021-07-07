@@ -7,11 +7,10 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ContextEntry {
-    
+public class Script {
+
     private UUID id;
-    private String key;
-    private String entry;
-    private boolean isFixed;
     private UUID scenarioId;
+    private String name;
+    private String code;
 }

@@ -28,7 +28,7 @@ public class JurandirConfigBean {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(Paths.get(CONFIG_FILE_NAME).toFile(), stringJson);
             return stringJson;
         } catch (Exception error) {
-            throw new JurandirConfigException("Error updating config file", error);
+            throw new JurandirConfigException("Error updating config file through json string", error);
         }
     }
 
