@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import es.thalesalv.jurandir.application.bean.JurandirConfigBean;
 import es.thalesalv.jurandir.application.data.ApplicationContextStore;
-import es.thalesalv.jurandir.domain.model.JurandirConfig;
+import es.thalesalv.jurandir.domain.model.bot.JurandirConfig;
 import lombok.RequiredArgsConstructor;
 
 @Service

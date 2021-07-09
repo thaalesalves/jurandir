@@ -1,6 +1,6 @@
 package es.thalesalv.jurandir.application.data;
 
-import es.thalesalv.jurandir.domain.model.JurandirConfig;
+import es.thalesalv.jurandir.domain.model.bot.JurandirConfig;
 
 public interface ApplicationContextStore {
 

@@ -1,7 +1,8 @@
-package es.thalesalv.jurandir.domain.model;
+package es.thalesalv.jurandir.domain.model.bot;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import es.thalesalv.jurandir.domain.model.GPT;
 import lombok.Builder;
 import lombok.Data;
 

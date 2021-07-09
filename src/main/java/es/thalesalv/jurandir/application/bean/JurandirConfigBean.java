@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 import es.thalesalv.jurandir.application.data.ApplicationContextStore;
 import es.thalesalv.jurandir.domain.exception.JurandirConfigException;
-import es.thalesalv.jurandir.domain.model.JurandirConfig;
+import es.thalesalv.jurandir.domain.model.bot.JurandirConfig;
 import lombok.RequiredArgsConstructor;
 
 @Configuration

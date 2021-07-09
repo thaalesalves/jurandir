@@ -1,11 +1,14 @@
 package es.thalesalv.jurandir.adapter.data.entity;
 
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -20,8 +23,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "scripts")
-public class ScriptEntity {
+@Table(name = "script_set")
+public class ScriptSetEntity {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -29,12 +32,22 @@ public class ScriptEntity {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(name = "scenario_id")
-    private UUID scenarioId;
+    @Column(name = "title")
+    private String title;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "context_modifier")
+    private String contextModifier;
 
-    @Column(name = "code")
-    private String code;
+    @Column(name = "input_modifier")
+    private String inputModifier;
+
+    @Column(name = "output_modifier")
+    private String outputModifier;
+
+    @Column(name = "shared_library")
+    private String sharedLibrary;
+
+    @OneToMany
+    @JoinColumn(name = "scenario_id")
+    private Set<ScenarioEntity> scenarios;
 }

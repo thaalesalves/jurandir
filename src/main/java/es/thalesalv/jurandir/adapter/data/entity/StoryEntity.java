@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -20,8 +22,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "context_entry")
-public class ContextEntryEntity {
+@Table(name = "story")
+public class StoryEntity {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -29,12 +31,16 @@ public class ContextEntryEntity {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(name = "key")
-    private String key;
+    @Column(name = "title")
+    private String title;
 
-    @Column(name = "entry")
-    private String entry;
+    @Column(name = "description")
+    private String description;
 
-    @Column(name = "is_fixed")
-    private boolean isFixed;
+    @Column(name = "prompt")
+    private String prompt;
+
+    @ManyToOne
+    @JoinColumn(name = "scenario_id")
+    private ScenarioEntity scenario;
 }

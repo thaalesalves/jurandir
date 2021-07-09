@@ -1,4 +1,4 @@
-package es.thalesalv.jurandir.domain.model;
+package es.thalesalv.jurandir.domain.model.discord;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

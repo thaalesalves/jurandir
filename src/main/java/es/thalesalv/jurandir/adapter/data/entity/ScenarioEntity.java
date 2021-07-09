@@ -5,9 +5,10 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -29,17 +30,19 @@ public class ScenarioEntity {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "scenario_id", updatable = false, nullable = false)
     private UUID id;
 
     @Column(name = "title")
     private String title;
 
-    @Column(name = "scripts")
-    @OneToMany(targetEntity = ScriptEntity.class, mappedBy = "scenarioId", fetch = FetchType.EAGER)
-    private Set<ScriptEntity> scripts;
+    @ManyToOne
+    @Column(name = "script_set_id")
+    private ScriptSetEntity scriptSet;
 
-    @Column(name = "entries")
-    @OneToMany(targetEntity = ContextEntryEntity.class, mappedBy = "scenarioId", fetch = FetchType.EAGER)
-    private Set<ContextEntryEntity> contextEntries;
+    @ManyToMany(mappedBy = "scenarios")
+    private Set<ContextEntrySetEntity> contextEntries;
+
+    @OneToMany(mappedBy = "scenarios")
+    private Set<StoryEntity> stories;
 }

@@ -2,7 +2,7 @@ package es.thalesalv.jurandir.application.data;
 
 import org.springframework.stereotype.Component;
 
-import es.thalesalv.jurandir.domain.model.JurandirConfig;
+import es.thalesalv.jurandir.domain.model.bot.JurandirConfig;
 import lombok.RequiredArgsConstructor;
 
 @Component

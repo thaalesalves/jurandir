@@ -8,5 +8,4 @@ import org.springframework.stereotype.Repository;
 import es.thalesalv.jurandir.adapter.data.entity.ScenarioEntity;
 
 @Repository
-public interface ScenarioRepository extends JpaRepository<ScenarioEntity, UUID> {
-}
+public interface ScenarioRepository extends JpaRepository<ScenarioEntity, UUID> {}
