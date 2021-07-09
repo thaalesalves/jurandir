@@ -47,7 +47,7 @@ public class ContextEntryController {
         }
     }
 
-    @GetMapping("/get")
+    @GetMapping("/get/set")
     public Mono<List<ContextEntrySet>> getAllContextEntrySets() {
         try {
             return null;
@@ -65,7 +65,7 @@ public class ContextEntryController {
         }
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/get/set/{id}")
     public Mono<ContextEntrySet> getContextEntrySetById(@PathVariable UUID id) {
         try {
             return null;
@@ -83,7 +83,7 @@ public class ContextEntryController {
         }
     }
 
-    @GetMapping("/get/story/{scenario_id}")
+    @GetMapping("/get/story/{story_id}")
     public Mono<List<ContextEntrySet>> getContextEntrySetByStoryId(@PathVariable UUID storyId) {
         try {
             return null;
