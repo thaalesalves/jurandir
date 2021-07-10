@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -37,12 +39,15 @@ public class ScenarioEntity {
     private String title;
 
     @ManyToOne
-    @Column(name = "script_set_id")
+    @JoinColumn(name = "script_set_id")
     private ScriptSetEntity scriptSet;
 
-    @ManyToMany(mappedBy = "scenarios")
+    @ManyToMany
+    @JoinTable(name = "scenario_has_entry_sets",
+            joinColumns = @JoinColumn(name = "scenario_id", insertable = false, updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "entry_set_id", insertable = false, updatable = false))
     private Set<ContextEntrySetEntity> contextEntries;
 
-    @OneToMany(mappedBy = "scenarios")
+    @OneToMany(mappedBy = "id")
     private Set<StoryEntity> stories;
 }

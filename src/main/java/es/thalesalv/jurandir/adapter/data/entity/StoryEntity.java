@@ -28,7 +28,7 @@ public class StoryEntity {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "story_id", updatable = false, nullable = false)
     private UUID id;
 
     @Column(name = "title")

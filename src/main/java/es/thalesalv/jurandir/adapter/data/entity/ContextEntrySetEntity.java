@@ -7,8 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -30,7 +28,7 @@ public class ContextEntrySetEntity {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "entry_set_id", updatable = false, nullable = false, insertable = false)
     private UUID id;
 
     @Column(name = "name")
@@ -39,10 +37,9 @@ public class ContextEntrySetEntity {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(mappedBy = "contextEntries")
+    @ManyToMany
     private Set<ScenarioEntity> scenarios;
 
     @ManyToMany
-    @JoinTable(name = "entry_set_has_entries", joinColumns = @JoinColumn(name = "entry_set_id"), inverseJoinColumns = @JoinColumn(name = "entry_id"))
     private Set<ContextEntryEntity> entities;
 }
