@@ -8,28 +8,24 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import es.thalesalv.jurandir.adapter.model.KoboldAiRequestBody;
-import es.thalesalv.jurandir.application.data.ApplicationContextStore;
+import es.thalesalv.jurandir.application.bean.JurandirConfigBean;
+import es.thalesalv.jurandir.domain.model.bot.JurandirConfig;
+import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.entities.User;
 import reactor.core.publisher.Mono;
 
 @Component
-public class GPTService {
+@RequiredArgsConstructor
+public class GPTChatBotService {
 
-    private final WebClient.Builder webClientBuilder;
     private final ObjectMapper objectMapper;
-    private final ApplicationContextStore contextStore;
-
-    public GPTService(WebClient.Builder webClientBuilder, ObjectMapper objectMapper,
-            ApplicationContextStore contextStore) {
-
-        this.contextStore = contextStore;
-        this.objectMapper = objectMapper;
-        this.webClientBuilder = webClientBuilder;
-    }
+    private final JurandirConfigBean configBean;
+    private final WebClient.Builder webClientBuilder;
 
     public Mono<String> prompt(User bot, String context, String message, User author) throws JsonProcessingException {
 
-        return this.webClientBuilder.baseUrl(contextStore.getConfig().getGpt().getServerAddress())
+        JurandirConfig config = configBean.loadConfig();
+        return this.webClientBuilder.baseUrl(config.getGpt().getServerAddress())
             .build()
             .post()
             .uri(uri -> uri.pathSegment("request").build())
@@ -39,12 +35,12 @@ public class GPTService {
                 headers.add("Connection", "keep-alive");
             })
             .bodyValue(objectMapper.writeValueAsString(KoboldAiRequestBody.builder()
-                    .temperature(contextStore.getConfig().getGpt().getTemperature())
-                    .topP(contextStore.getConfig().getGpt().getProbabilityValue())
-                    .min(contextStore.getConfig().getGpt().getMinTokens())
-                    .max(contextStore.getConfig().getGpt().getMaxTokens())
-                    .numseqs(contextStore.getConfig().getGpt().getNumberOfSequences())
-                    .repPen(contextStore.getConfig().getGpt().getRepetitionPenalty())
+                    .temperature(config.getGpt().getTemperature())
+                    .topP(config.getGpt().getProbabilityValue())
+                    .min(config.getGpt().getMinTokens())
+                    .max(config.getGpt().getMaxTokens())
+                    .numseqs(config.getGpt().getNumberOfSequences())
+                    .repPen(config.getGpt().getRepetitionPenalty())
                     .text(new StringBuilder()
                             .append(context)
                             .append(author.getName().replace(bot.getName(), "You"))

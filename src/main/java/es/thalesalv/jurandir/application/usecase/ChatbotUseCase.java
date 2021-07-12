@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import es.thalesalv.jurandir.adapter.controller.client.GPTService;
+import es.thalesalv.jurandir.adapter.controller.client.GPTChatBotService;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageHistory;
@@ -30,7 +30,7 @@ public class ChatbotUseCase {
     private int contextWindow;
 
     private final ObjectMapper objectMapper;
-    private final GPTService gpt;
+    private final GPTChatBotService gpt;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ChatbotUseCase.class);
 

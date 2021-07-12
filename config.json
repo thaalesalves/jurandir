@@ -1,1 +1,19 @@
-null
+{
+    "gpt": {
+        "temp": 0.8,
+        "prob_value": 1,
+        "max_tokens": 100,
+        "min_tokens": 5,
+        "num_seq": 1,
+        "rep_pen": 1,
+        "server_address": ""
+    },
+    "jurandir": {
+        "channel_lock": false,
+        "authorized_channels": [],
+        "admin_users": [
+            "191672198233063425"
+        ],
+        "manager_users": []
+    }
+}

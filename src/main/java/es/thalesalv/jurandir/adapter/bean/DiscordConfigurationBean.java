@@ -25,7 +25,7 @@ public class DiscordConfigurationBean {
     @Bean
     public JDA jda() throws LoginException {
 
-        jurandirConfigBean.updateConfig();
+        jurandirConfigBean.loadConfig();
         return JDABuilder.createDefault(apiToken)
             .addEventListeners(chatService)
             .build();

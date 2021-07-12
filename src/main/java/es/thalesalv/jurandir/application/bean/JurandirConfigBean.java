@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.context.annotation.Configuration;
 
-import es.thalesalv.jurandir.application.data.ApplicationContextStore;
 import es.thalesalv.jurandir.domain.exception.JurandirConfigException;
 import es.thalesalv.jurandir.domain.model.bot.JurandirConfig;
 import lombok.RequiredArgsConstructor;
@@ -19,12 +18,9 @@ public class JurandirConfigBean {
     private static final String CONFIG_FILE_NAME = "config.json";
 
     private final ObjectMapper objectMapper;
-    private final ApplicationContextStore contextStore;
 
     public String updateConfig(String stringJson) {
         try {
-            JurandirConfig config = objectMapper.readValue(stringJson, JurandirConfig.class);
-            contextStore.setConfig(config);
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(Paths.get(CONFIG_FILE_NAME).toFile(), stringJson);
             return stringJson;
         } catch (Exception error) {
@@ -32,9 +28,8 @@ public class JurandirConfigBean {
         }
     }
 
-    public String updateConfig() {
+    public String updateConfig(JurandirConfig config) {
         try {
-            JurandirConfig config = contextStore.getConfig();
             String configFile = objectMapper.writeValueAsString(config);
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(Paths.get(CONFIG_FILE_NAME).toFile(), config);
             return configFile;
@@ -43,12 +38,10 @@ public class JurandirConfigBean {
         }
     }
 
-    public String loadConfig() {
+    public JurandirConfig loadConfig() {
         try {
             String configFile = objectMapper.writeValueAsString(objectMapper.readValue(Paths.get(CONFIG_FILE_NAME).toFile(), Map.class));
-            JurandirConfig config = objectMapper.readValue(configFile, JurandirConfig.class);
-            contextStore.setConfig(config);
-            return configFile;
+            return objectMapper.readValue(configFile, JurandirConfig.class);
         } catch (Exception error) {
             throw new JurandirConfigException("Error loading config file", error);
         }

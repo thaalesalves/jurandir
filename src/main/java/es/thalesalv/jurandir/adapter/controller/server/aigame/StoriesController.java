@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.thalesalv.jurandir.adapter.controller.client.GPTStoryInferenceService;
+import es.thalesalv.jurandir.adapter.model.KoboldAiResponseBody;
 import es.thalesalv.jurandir.domain.model.aigame.Story;
+import es.thalesalv.jurandir.domain.model.aigame.StoryPrompt;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
@@ -18,6 +21,8 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/stories")
 public class StoriesController {
+
+    private final GPTStoryInferenceService inferenceService;
 
     @PostMapping("/add")
     public Mono<Story> createStory(@RequestBody Story body) {
@@ -41,6 +46,15 @@ public class StoriesController {
     public Mono<Story> getStoryById(@PathVariable UUID id) {
         try {
             return null;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @PostMapping("/generate")
+    public Mono<KoboldAiResponseBody> generate(@RequestBody StoryPrompt body) {
+        try {
+            return inferenceService.prompt(body);
         } catch (Exception e) {
             throw e;
         }
